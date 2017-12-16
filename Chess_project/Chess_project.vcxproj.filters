@@ -29,6 +29,9 @@
     <None Include="chessGraphics.exe">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="chess_uml.pdf">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
