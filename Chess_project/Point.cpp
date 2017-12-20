@@ -8,8 +8,8 @@ Point::Point(char x, char y)
 
 Point::Point(std::string coordinates)
 {
-	this->_x = 0;
-	this->_y = 0;
+	this->_x = coordinates[0];
+	this->_y = coordinates[1];
 }
 
 Point::~Point()
@@ -34,6 +34,6 @@ void Point::SetXY(char x, char y)
 
 void Point::setXY(std::string coordinates)
 {
-	this->_x = 0;
-	this->_y = 0;
+	this->_x = coordinates[0];
+	this->_y = coordinates[1];
 }
