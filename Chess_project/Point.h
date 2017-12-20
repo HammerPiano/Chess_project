@@ -4,6 +4,9 @@
 class Point {
 public:
 	
+	Point(char x, char y);
+	Point(std::string coordinates);
+	~Point();
 	char getX();
 	char getY();
 
