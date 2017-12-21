@@ -10,7 +10,7 @@ King::~King()
 	// Nothing to do.
 }
 
-void King::move(Point coordinates)
+void King::move(Point coordinates, const vector<vector<Piece*>>& board)
 {
 	char x = this->_coordinates.getX();
 	char y = this->_coordinates.getY();

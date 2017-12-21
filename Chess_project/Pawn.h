@@ -3,7 +3,7 @@
 class Pawn : public Piece
 {
 public:
-	Pawn(Point coordinates, bool white, bool firstMove);
+	Pawn(Point coordinates, bool white);
 	virtual void move(Point coordinates,const vector<vector<Piece*>>& board) override;
 	~Pawn();
 private:
