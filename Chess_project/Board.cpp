@@ -22,11 +22,11 @@ Board::Board(std::string initialState)
 			case 'k':
 				King(Point(x + 'A', y + '1'), false);
 				break;
-			case 'P':
-				Pawn(Point(x + 'A', y + '1'), true);
+			case 'R':
+				Rook(Point(x + 'A', y + '1'), true);
 				break;
-			case 'p':
-				Pawn(Point(x + 'A', y + '1'), false);
+			case 'r':
+				Rook(Point(x + 'A', y + '1'), false);
 				break;
 			default:
 				break;
@@ -49,7 +49,7 @@ Board::~Board()
 
 std::string Board::movePiece(Point src, Point dst)
 {
-	std::string retVal = "0";
+	std::string retVal = ERR_NO_ERR;
 	//valid point
 	if (src.getX() >= 'A' && dst.getX() >= 'A' && src.getX() <= 'H' && dst.getX() <= 'H' && src.getY() >= '1' && dst.getY() >= '1' && src.getY() <= '8' && dst.getY() <= '8')
 	{
@@ -57,34 +57,31 @@ std::string Board::movePiece(Point src, Point dst)
 		Piece* dstPiece = this->_board[dst.getX() - 'A'][dst.getY() - '1'];
 		if (srcPiece != nullptr && srcPiece->isWhite() == this->_currentPlayer)
 		{
-			if(dstPiece == nullptr || dstPiece->isWhite() != this->_currentPlayer)
+			if (dstPiece == nullptr || dstPiece->isWhite() != this->_currentPlayer)
 			{
 				try
 				{
 					srcPiece->move(dst, this->_board);
-					this->_board[dst.getX() - 'A'][dst.getY() - '1'] = srcPiece;
 					this->_board[src.getX() - 'A'][src.getY() - '1'] = nullptr;
+					this->_board[dst.getX() - 'A'][dst.getY() - '1'] = srcPiece;
 					delete dstPiece;
 				}
-				catch (std::exception& e)
+				catch (exception& e)
 				{
-					//probably invalid selection of tiles ofr ds
-					retVal = e.what()[0];
+					retVal = e.what()[0];//first char is the err number
 				}
 			}
 			else
 			{
-				retVal = "3";
-			}			
+				retVal = ERR_INVALID_DST;
+			}
+
 		}
 		else
 		{
-			retVal = "2";//no piece in source tile
+			retVal = ERR_NO_SRC;
 		}
+		
 	}
-	else
-	{
-		retVal = "5";//invalid points
-	}
-	return;
+	return retVal;
 }

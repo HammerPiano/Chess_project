@@ -3,13 +3,23 @@
 #include <string>
 #include <vector>
 #include "Piece.h"
-#include "Pawn.h"
+#include "Rook.h"
 #include "King.h"
 #include <exception>
 
 //according to the presentation, gets a 66 long string
 #define INITIALSTATE_LENGTH 66
+#define ERR_NO_ERR "0"
+#define ERR_CHECK "1"
+#define ERR_NO_SRC "2"
+#define ERR_INVALID_DST "3"
+#define ERR_SELF_CHECK "4"
+#define ERR_INVALID_INDEX "5"
+#define ERR_INVALID_MOVE "6"
+#define ERR_SAME_INDEXES "7"
+#define ERR_CHECK_MATE "8"
 using std::vector;
+using std::exception;
 class Board
 {
 public :
