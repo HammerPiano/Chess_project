@@ -11,7 +11,7 @@ Pawn::~Pawn()
 {
 }
 
-void Pawn::move(Point coordinates)
+void Pawn::move(Point coordinates, const vector<vector<Piece*>>& board)
 {
 	if (this->_coordinates.getX() == coordinates.getX())
 	{

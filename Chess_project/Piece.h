@@ -2,8 +2,9 @@
 #include "Point.h"
 #include <iostream>
 #include <string>
+#include <vector>
 #include "Invalid_Move.h"
-
+using std::vector;
 class Piece
 {
 public:
@@ -11,7 +12,7 @@ public:
 	~Piece();
 	bool isWhite();
 	std::string getType();
-	virtual void move(Point coordinates) = 0;
+	virtual void move(Point coordinates,const vector<vector<Piece*>>& board) = 0;
 protected:
 	Point _coordinates;
 private:
