@@ -57,7 +57,9 @@ public:
 	Pipe()
 	{
 		// Prepare the pipe name
-		strPipeName  = TEXT("\\\\.\\pipe\\chessPipe");
+		// https://stackoverflow.com/questions/14682480/converting-from-const-char-to-lptstr-without-uses-converstion
+		// thanks stackover flow 
+		strPipeName  = const_cast<LPTSTR>("\\\\.\\pipe\\chessPipe");
 			
 	}
 

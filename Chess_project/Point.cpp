@@ -26,7 +26,7 @@ char Point::getY()
 	return this->_y;
 }
 
-void Point::SetXY(char x, char y)
+void Point::setXY(char x, char y)
 {
 	this->_x = x;
 	this->_y = y;

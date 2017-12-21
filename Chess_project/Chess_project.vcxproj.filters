@@ -33,6 +33,9 @@
     <ClInclude Include="Pawn.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="invalidMove.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="chessGraphics.exe">
@@ -56,6 +59,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Pawn.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="invalidMove.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
