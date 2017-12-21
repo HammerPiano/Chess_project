@@ -1,7 +1,8 @@
 #pragma once
 #include <iostream>
 
-class Point {
+class Point
+{
 public:
 	
 	Point(char x, char y);

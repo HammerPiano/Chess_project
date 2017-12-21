@@ -115,6 +115,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Invalid_Move.h" />
+    <ClInclude Include="King.h" />
     <ClInclude Include="Pawn.h" />
     <ClInclude Include="Piece.h" />
     <ClInclude Include="Pipe.h" />
@@ -127,6 +129,8 @@
     <None Include="chess_uml.pdf" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Invalid_Move.cpp" />
+    <ClCompile Include="King.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Pawn.cpp" />
     <ClCompile Include="Piece.cpp" />
