@@ -2,6 +2,7 @@
 #include "Point.h"
 #include <iostream>
 #include <string>
+#include "Invalid_Move.h"
 class Piece
 {
 public:
