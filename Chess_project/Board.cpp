@@ -47,18 +47,44 @@ Board::~Board()
 	}
 }
 
-void Board::movePiece(Point src, Point dst)
+std::string Board::movePiece(Point src, Point dst)
 {
+	std::string retVal = "0";
 	//valid point
 	if (src.getX() >= 'A' && dst.getX() >= 'A' && src.getX() <= 'H' && dst.getX() <= 'H' && src.getY() >= '1' && dst.getY() >= '1' && src.getY() <= '8' && dst.getY() <= '8')
 	{
 		Piece* srcPiece = this->_board[src.getX() - 'A'][src.getY() - '1'];
-		if (srcPiece != nullptr)
+		Piece* dstPiece = this->_board[dst.getX() - 'A'][dst.getY() - '1'];
+		if (srcPiece != nullptr && srcPiece->isWhite() == this->_currentPlayer)
 		{
-			if (srcPiece->isWhite() == this->_currentPlayer)
+			if(dstPiece == nullptr || dstPiece->isWhite() != this->_currentPlayer)
 			{
-
+				try
+				{
+					srcPiece->move(dst, this->_board);
+					this->_board[dst.getX() - 'A'][dst.getY() - '1'] = srcPiece;
+					this->_board[src.getX() - 'A'][src.getY() - '1'] = nullptr;
+					delete dstPiece;
+				}
+				catch (std::exception& e)
+				{
+					//probably invalid selection of tiles ofr ds
+					retVal = e.what()[0];
+				}
 			}
+			else
+			{
+				retVal = "3";
+			}			
+		}
+		else
+		{
+			retVal = "2";//no piece in source tile
 		}
 	}
+	else
+	{
+		retVal = "5";//invalid points
+	}
+	return;
 }

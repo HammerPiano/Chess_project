@@ -15,7 +15,7 @@ class Board
 public :
 	Board(std::string initialState);
 	~Board();
-	void movePiece(Point src, Point dst);
+	std::string movePiece(Point src, Point dst);
 	void printBoard();
 	bool isCheck();
 	bool isCheckmate();
