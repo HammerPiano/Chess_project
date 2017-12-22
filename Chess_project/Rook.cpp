@@ -19,7 +19,16 @@ void Rook::move(Point coordinates, const vector<vector<Piece*>>& board)
 
 	if ((newX == x && newY != y) ^ (newX != x && newY == y))
 	{
-			this->_coordinates = coordinates;
+		Point newCoordinates = this->_coordinates;
+		for (size_t i = 0; i < BOARD_LENGHT; i++)
+		{
+			if (board[x][i] != nullptr)
+			{
+				break;
+			}
+			
+		}
+		this->_coordinates = newCoordinates;
 	}
 	else
 	{

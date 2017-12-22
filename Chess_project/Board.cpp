@@ -8,13 +8,13 @@ Board::Board(std::string initialState)
 	}
 	this->_currentPlayer = initialState[65] == '0' ? false : true;
 	this->_firstMove = true;
-	for (size_t x = 0; x < 8; x++)//num of tiles on board
+	for (size_t x = 0; x < BOARD_LENGHT; x++)//num of tiles on board
 	{
-		for (size_t y = 0; y < 8; y++)
+		for (size_t y = 0; y < BOARD_LENGHT; y++)
 		{
 
 			Piece* temp = nullptr;
-			switch (initialState[x * 8 + y])
+			switch (initialState[x * BOARD_LENGHT + y])
 			{
 			case 'K':
 				King(Point(x + 'A', y + '0'), true);
@@ -38,9 +38,9 @@ Board::Board(std::string initialState)
 
 Board::~Board()
 {
-	for (size_t x = 0; x < 8; x++)
+	for (size_t x = 0; x < BOARD_LENGHT; x++)
 	{
-		for (size_t y = 0; y < 8; y++)
+		for (size_t y = 0; y < BOARD_LENGHT; y++)
 		{
 			delete this->_board[x][y];
 		}

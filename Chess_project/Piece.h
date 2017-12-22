@@ -5,6 +5,7 @@
 #include <vector>
 #include "Invalid_Move.h"
 using std::vector;
+#define BOARD_LENGHT 8
 class Piece
 {
 public:
