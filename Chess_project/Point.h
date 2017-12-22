@@ -13,6 +13,7 @@ public:
 
 	void setXY(char x, char y);
 	void setXY(std::string coordinates);
+	bool operator==(const Point& other);
 private:
 	char _x;
 	char _y;

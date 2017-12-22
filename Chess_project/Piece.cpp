@@ -21,4 +21,9 @@ std::string Piece::getType()
 	return this->_type;
 }
 
+Point Piece::getCoordinates()
+{
+	return this->_coordinates;
+}
+
 //move isn't implemented here, because it is unique for each class

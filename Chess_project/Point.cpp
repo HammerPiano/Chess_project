@@ -37,3 +37,8 @@ void Point::setXY(std::string coordinates)
 	this->_x = coordinates[0];
 	this->_y = coordinates[1];
 }
+
+bool Point::operator==(const Point & other)
+{
+	return this->_x == other._x && this->_y == other._y;
+}

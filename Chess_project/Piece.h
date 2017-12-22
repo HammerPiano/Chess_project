@@ -5,7 +5,7 @@
 #include <vector>
 #include "Invalid_Move.h"
 using std::vector;
-#define BOARD_LENGHT 8
+#define BOARD_LENGTH 8
 class Piece
 {
 public:
@@ -13,6 +13,7 @@ public:
 	~Piece();
 	bool isWhite();
 	std::string getType();
+	Point getCoordinates();
 	virtual void move(Point coordinates,const vector<vector<Piece*>>& board) = 0;
 protected:
 	Point _coordinates;
