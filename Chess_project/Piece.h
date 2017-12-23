@@ -10,7 +10,7 @@ class Piece
 {
 public:
 	Piece(Point coordinates, std::string type, bool white);
-	~Piece();
+	virtual ~Piece();
 	bool isWhite();
 	std::string getType();
 	Point getCoordinates();

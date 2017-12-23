@@ -62,7 +62,7 @@ Board::~Board()
 std::string Board::movePiece(Point src, Point dst)
 {
 	std::string retVal = ERR_NO_ERR;
-	//valid point
+	//valid point, inside the board
 	if (src.getX() >= 'a' && dst.getX() >= 'a' && src.getX() <= 'h' && dst.getX() <= 'h' && src.getY() >= '1' && dst.getY() >= '1' && src.getY() <= '8' && dst.getY() <= '8')
 	{
 		Piece* srcPiece = this->_board[src.getY() - '1'][src.getX() - 'a'];
@@ -73,6 +73,19 @@ std::string Board::movePiece(Point src, Point dst)
 			{
 				try
 				{
+					//killing the king!
+					if (dstPiece->getType() == "King")
+					{
+						//white player (true) kills the black king, and vice versa
+						if (this->_currentPlayer)
+						{
+							this->_blackKing = nullptr;
+						}
+						else
+						{
+							this->_whiteKing = nullptr;
+						}
+					}
 					srcPiece->move(dst, this->_board);
 					this->_board[src.getY() - '1'][src.getX() - 'a'] = nullptr;
 					this->_board[dst.getY() - '1'][dst.getX() - 'a'] = srcPiece;
@@ -166,4 +179,9 @@ bool Board::isCheck()
 		}
 	}
 	return check;
+}
+
+bool Board::isCheckmate()
+{
+	return this->_whiteKing == nullptr || this->_blackKing == nullptr;
 }
