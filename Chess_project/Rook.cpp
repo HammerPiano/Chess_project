@@ -32,7 +32,6 @@ void Rook::move(Point coordinates, const vector<vector<Piece*>>& board)
 	// or x or y can be different, not both
 	if ((newX == x && newY != y) ^ (newX != x && newY == y))
 	{
-		
 		this->_coordinates = coordinates;
 	}
 	else
