@@ -20,14 +20,19 @@ Board::Board(std::string initialState) : _board(BOARD_LENGTH,vector<Piece*>(BOAR
 	this->_firstMove = true;
 	for (size_t y = 0; y < BOARD_LENGTH; y++)//num of tiles on board
 	{
+		//the x is the letter in the board, the y is the line number. lines are the Piece* arrays
+		//since I am building the array from right to left (that is how it is represented in the string), i must reverse iterate over the array
 		actualY = (char)BOARD_LENGTH - y - 1;
 		for (size_t x = 0; x < BOARD_LENGTH; x++)
 		{
 			Piece* temp = nullptr;
+			
+			//to access a variable [x][y] you can also do [x*array length + y]
 			char piece = initialState[y * BOARD_LENGTH + x];
-			//because the prespective is reversed than the
+			
 			switch (piece)
 			{
+			//kings, each king is stored internally
 			case 'K':
 				temp = new King(Point(x + 'a', actualY + '1'), true);
 				this->_whiteKing = temp;
@@ -36,10 +41,15 @@ Board::Board(std::string initialState) : _board(BOARD_LENGTH,vector<Piece*>(BOAR
 				temp = new King(Point(x + 'a', actualY + '1'), false);
 				this->_blackKing = temp;
 				break;
+			//rooks
 			case 'R':
 			case 'r':
 				temp = new Rook(Point(x + 'a', actualY + '1'), piece == 'R');
 				break;
+			//pawns
+			case 'P':
+			case 'p':
+				temp = new Pawn(Point(x + 'a', actualY + '1'), piece == 'P');
 			default:
 				break;
 			}
@@ -74,7 +84,7 @@ std::string Board::movePiece(Point src, Point dst)
 				try
 				{
 					//killing the king!
-					if (dstPiece->getType() == "King")
+					if (dstPiece != nullptr && dstPiece->getType() == "King")
 					{
 						//white player (true) kills the black king, and vice versa
 						if (this->_currentPlayer)
@@ -111,12 +121,22 @@ std::string Board::movePiece(Point src, Point dst)
 	if (retVal == ERR_NO_ERR)
 	{
 		
+		
+		
+		//check if the player did a check on the enemy
 		if (isCheck())
 		{
 			retVal = ERR_CHECK;
 		}
 
 		this->_currentPlayer = !this->_currentPlayer;//toggle current player, after valid move
+		//check if the player did a check on himself
+		if (isCheck())
+		{
+			retVal = ERR_SELF_CHECK;
+			//don't change the current player
+			this->_currentPlayer = !this->_currentPlayer;
+		}
 		
 	}
 	return retVal;
@@ -160,24 +180,65 @@ bool Board::isCheck()
 {
 	//the other king
 	Piece* temp = this->_currentPlayer == false ? this->_whiteKing : this->_blackKing;
-	bool check = false;
-	//check for rooks:
-	Point coordinates = temp->getCoordinates();
-	for (int i = 0; i < BOARD_LENGTH && !check; i++)
+	bool check = isCheckmate();
+	
+	//is checkmate?
+	if (!check)
 	{
-		//check for enemy rook on the same row
-		temp = this->_board[i][coordinates.getX() - 'a'];
-		if (temp != nullptr)
+		//check for rooks:
+		Point coordinates = temp->getCoordinates();
+		for (int i = 0; i < BOARD_LENGTH && !check; i++)
 		{
-			check = temp->getType() == "Rook" && temp->isWhite() == this->_currentPlayer;
+			//check for enemy rook on the same row
+			temp = this->_board[i][coordinates.getX() - 'a'];
+			if (temp != nullptr)
+			{
+				check = temp->getType() == "Rook" && temp->isWhite() == this->_currentPlayer;
+			}
+			//check for enemy rook of the same columb
+			temp = this->_board[coordinates.getY() - '1'][i];
+			if (!check && temp != nullptr)
+			{
+				check = temp->getType() == "Rook" && temp->isWhite() == this->_currentPlayer;
+			}
 		}
-		//check for enemy rook of the same columb
-		temp = this->_board[coordinates.getY() - '1'][i];
-		if (!check && temp != nullptr)
+		//check for Pawns:
+		if (!check)
 		{
-			check = temp->getType() == "Rook" && temp->isWhite() == this->_currentPlayer;
+			char safeRow = 0, yOffset = 0;
+			//checking for possiability on other player king
+			if (this->_currentPlayer)
+			{
+				//black player, check for pawns from below
+				safeRow = '1';
+				yOffset = -1;
+			}
+			else
+			{
+				//white player, check for pawn from top left or right
+				safeRow = '8';
+				yOffset = 1;
+			}
+			if (coordinates.getY() != safeRow)//top row, no pawn can eat the king
+			{
+				//king not at right most position
+				Piece* lPawn = nullptr;
+				Piece* rPawn = nullptr;
+				if (coordinates.getX() > 'a')
+				{
+					lPawn = this->_board[coordinates.getY() + yOffset - '1'][coordinates.getX() - 1 - 'a'];
+				}
+
+				if (coordinates.getX() < 'h')
+				{
+					rPawn = this->_board[coordinates.getY() + yOffset - '1'][coordinates.getX() + 1 - 'a'];
+				}
+				//check for enemy pawn on either side
+				check = (lPawn != nullptr && lPawn->isWhite() == this->_currentPlayer) || (rPawn != nullptr && rPawn->isWhite() == this->_currentPlayer);
+			}
 		}
 	}
+	
 	return check;
 }
 

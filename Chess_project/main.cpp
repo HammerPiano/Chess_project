@@ -40,7 +40,7 @@ void main()
 	// msgToGraphics should contain the board string accord the protocol
 	// YOUR CODE
 	//strcpy_s(msgToGraphics, "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR1");
-	strcpy_s(msgToGraphics, "r###k##r################################################R##K###R0"); // just example...
+	strcpy_s(msgToGraphics, "r###k##rpppppppp################################PPPPPPPPR##K###R0"); // just example...
 	
 	std::string temp = msgToGraphics;
 	std::cout << msgToGraphics << " " << temp.length() << std::endl;

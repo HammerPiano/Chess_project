@@ -5,6 +5,7 @@
 #include "Piece.h"
 #include "Rook.h"
 #include "King.h"
+#include "Pawn.h"
 #include <exception>
 
 //according to the presentation, gets a 66 long string
