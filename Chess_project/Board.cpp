@@ -294,7 +294,7 @@ bool Board::isCheck()
 				}
 				else
 				{
-					check = tempPiece->getType() == "Bishop" || tempPiece->getType() == "Queen" || (abs(tempX - x) == 1 && abs(tempY - y) == 1 && tempPiece->getType() == "Pawn";
+					check = tempPiece->getType() == "Bishop" || tempPiece->getType() == "Queen" || (abs(tempX - x) == 1 && abs(tempY - y) == 1 && tempPiece->getType() == "Pawn");
 				}
 			}
 			tempX++;
@@ -315,7 +315,7 @@ bool Board::isCheck()
 				}
 				else
 				{
-					check = tempPiece->getType() == "Bishop" || tempPiece->getType() == "Queen" || (abs(tempX - x) == 1 && abs(tempY - y) == 1 && tempPiece->getType() == "Pawn";
+					check = tempPiece->getType() == "Bishop" || tempPiece->getType() == "Queen" || (abs(tempX - x) == 1 && abs(tempY - y) == 1 && tempPiece->getType() == "Pawn");
 				}
 			}
 			tempX--;
@@ -336,7 +336,7 @@ bool Board::isCheck()
 				}
 				else
 				{
-					check = tempPiece->getType() == "Bishop" || tempPiece->getType() == "Queen" || (abs(tempX - x) == 1 && abs(tempY - y) == 1 && tempPiece->getType() == "Pawn";
+					check = tempPiece->getType() == "Bishop" || tempPiece->getType() == "Queen" || (abs(tempX - x) == 1 && abs(tempY - y) == 1 && tempPiece->getType() == "Pawn");
 				}
 			}
 			tempX++;
@@ -357,13 +357,108 @@ bool Board::isCheck()
 				}
 				else
 				{
-					check = tempPiece->getType() == "Bishop" || tempPiece->getType() == "Queen" || (abs(tempX - x) == 1 && abs(tempY - y) == 1 && tempPiece->getType() == "Pawn";
+					check = tempPiece->getType() == "Bishop" || tempPiece->getType() == "Queen" || (abs(tempX - x) == 1 && abs(tempY - y) == 1 && tempPiece->getType() == "Pawn");
 				}
 			}
 			tempX--;
 			tempY++;
 		}
-	
+		x = coordinates.getX() - 'a', y = coordinates.getY() - '1';
+		try
+		{
+			if (!check && this->_board[y + 1][x + 2] != nullptr && this->_board[y + 1][x + 2]->getType() == "Knight" && this->_board[y + 1][x + 2]->isWhite() != this->_curretPlayer)
+			{
+				check = true;
+			}
+		}
+		catch (const std::exception&)
+		{
+			//out of range, ignore
+		}
+
+		try
+		{
+			if (!check && this->_board[y - 1][x + 2] != nullptr && this->_board[y - 1][x + 2]->getType() == "Knight" && this->_board[y - 1][x + 2]->isWhite() != this->_currentPlayer)
+			{
+				check = true;
+			}
+		}
+		catch (const std::exception&)
+		{
+			//out of range, ignore
+		}
+
+		try
+		{
+			if (!check && this->_board[y + 2][x + 1] != nullptr && this->_board[y + 2][x + 1]->getType() == "Knight" && this->_board[y + 2][x + 1]->isWhite() != this->_currentPlayer)
+			{
+				check = true;
+			}
+		}
+		catch (const std::exception&)
+		{
+			//out of range, ignore
+		}
+
+		try
+		{
+			if (!check && this->_board[y - 2][x + 1] != nullptr && this->_board[y - 2][x + 1]->getType() == "Knight" && this->_board[y - 2][x + 1]->isWhite() != this->_currentPlayer)
+			{
+				check = true;
+			}
+		}
+		catch (const std::exception&)
+		{
+			//out of range, ignore
+		}
+
+		try
+		{
+			if (!check && this->_board[y + 1][x - 2] != nullptr && this->_board[y + 1][x - 2]->getType() == "Knight" && this->_board[y + 1][x - 2]->isWhite() != this->_currentPlayer)
+			{
+				check = true;
+			}
+		}
+		catch (const std::exception&)
+		{
+			//out of range, ignore
+		}
+
+		try
+		{
+			if (!check && this->_board[y - 1][x - 2] != nullptr && this->_board[y - 1][x - 2]->getType() == "Knight" && this->_board[y - 1][x - 2]->isWhite() != this->_currentPlayer)
+			{
+				check = true;
+			}
+		}
+		catch (const std::exception&)
+		{
+			//out of range, ignore
+		}
+
+		try
+		{
+			if (!check && this->_board[y + 2][x - 1] != nullptr && this->_board[y + 2][x - 1]->getType() == "Knight" && this->_board[y + 2][x - 1]->isWhite() != this->_currentPlayer)
+			{
+				check = true;
+			}
+		}
+		catch (const std::exception&)
+		{
+			//out of range, ignore
+		}
+
+		try
+		{
+			if (!check && this->_board[y - 2][x - 1] != nullptr && this->_board[y - 2][x - 1]->getType() == "Knight" && this->_board[y - 2][x - 1]->isWhite() != this->_currentPlayer)
+			{
+				check = true;
+			}
+		}
+		catch (const std::exception&)
+		{
+			//out of range, ignore
+		}
 	}
 	
 	return check;
