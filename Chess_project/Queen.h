@@ -7,5 +7,5 @@ public:
 	Queen(Point coordinates, bool white);
 	~Queen();
 
-	virtual void move(Point coordinates);
+	virtual void move(Point coordinates, const vector<vector<Piece*>>& board);
 };
