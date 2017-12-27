@@ -51,13 +51,21 @@ Board::Board(std::string initialState) : _board(BOARD_LENGTH,vector<Piece*>(BOAR
 			case 'p':
 				temp = new Pawn(Point(x + 'a', actualY + '1'), piece == 'P');
 				break;
+				//knights
 			case 'N':
 			case 'n':
 				temp = new Knight(Point(x + 'a', actualY + '1'), piece == 'N');
 				break;
+				//bishops
 			case 'B':
 			case 'b':
 				temp = new Bishop(Point(x + 'a', actualY + '1'), piece == 'B');
+				break;
+				//queens
+			case 'Q':
+			case 'q':
+				temp = new Queen(Point(x + 'a', actualY + '1'), piece == 'Q');
+				break;
 			default:
 				break;
 			}

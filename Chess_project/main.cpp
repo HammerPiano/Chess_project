@@ -25,7 +25,7 @@ void main()
 		if (ans == "0")
 		{
 			std::cout << "trying connect again.." << std::endl;
-			Sleep(5000);
+			Sleep(200);
 			isConnect = p.connect();
 		}
 		else 
@@ -39,8 +39,8 @@ void main()
 	char msgToGraphics[1024];
 	// msgToGraphics should contain the board string accord the protocol
 	// YOUR CODE
-	//strcpy_s(msgToGraphics, "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR1");
-	strcpy_s(msgToGraphics, "r###k##rpppppppp################################PPPPPPPPR##K###R0"); // just example...
+	strcpy_s(msgToGraphics, "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR0");
+	//strcpy_s(msgToGraphics, "r###k##rpppppppp################################PPPPPPPPR##K###R0"); // just example...
 	
 	std::string temp = msgToGraphics;
 	std::cout << msgToGraphics << " " << temp.length() << std::endl;

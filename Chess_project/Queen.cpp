@@ -10,10 +10,10 @@ Queen::~Queen()
 
 void Queen::move(Point coordinates, const vector<vector<Piece*>>& board)
 {
-	char curr_Y = this->_coordinates.getX();
-	char curr_X = this->_coordinates.getY();
-	char new_Y = coordinates.getX();
-	char new_X = coordinates.getY();
+	char curr_Y = this->_coordinates.getX() - 'a';
+	char curr_X = this->_coordinates.getY() - '1';
+	char new_Y = coordinates.getX() - 'a';
+	char new_X = coordinates.getY() - '1';
 	bool retVal = true;
 	int i = 0, j = 0;
 	if (curr_Y<new_Y && curr_X == new_X)
@@ -114,6 +114,6 @@ void Queen::move(Point coordinates, const vector<vector<Piece*>>& board)
 	}
 	if (retVal)
 	{
-		this->_coordinates.setXY = coordinates;
+		this->_coordinates = coordinates;
 	}
 }

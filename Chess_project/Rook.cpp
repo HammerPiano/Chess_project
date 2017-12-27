@@ -16,18 +16,12 @@ void Rook::move(Point coordinates, const vector<vector<Piece*>>& board)
 	char x = this->_coordinates.getX();
 	char y = this->_coordinates.getY();
 
-	char newX = coordinates.getX();
-	char newY = coordinates.getY();
+	char newX = coordinates.getX() - 'a';
+	char newY = coordinates.getY() - '1';
 	
-	for (i = 0; i < 8; i++)
+	if (board[newY][newX] != nullptr && board[newY][newX]->isWhite() == this->isWhite())
 	{
-		for (j = 0; j < 8; j++)
-		{
-			if (board[i][j] != nullptr && board[i][j]->getCoordinates() == coordinates)
-			{
-				throw Invalid_Move("6 - Invalid Rook Move");
-			}
-		}
+		throw Invalid_Move("6 - Invalid rook move");
 	}
 	// or x or y can be different, not both
 	if ((newX == x && newY != y) ^ (newX != x && newY == y))
