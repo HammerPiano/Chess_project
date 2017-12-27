@@ -50,6 +50,11 @@ Board::Board(std::string initialState) : _board(BOARD_LENGTH,vector<Piece*>(BOAR
 			case 'P':
 			case 'p':
 				temp = new Pawn(Point(x + 'a', actualY + '1'), piece == 'P');
+				break;
+			case 'N':
+			case 'n':
+				temp = new Knight(Point(x + 'a', actualY + '1'), piece == 'N');
+				break;
 			default:
 				break;
 			}
@@ -65,8 +70,11 @@ Board::~Board()
 		for (size_t y = 0; y < BOARD_LENGTH; y++)
 		{
 			delete this->_board[x][y];
+			this->_board[x][y] = nullptr;
 		}
 	}
+	this->_blackKing = nullptr;
+	this->_whiteKing = nullptr;
 }
 
 std::string Board::movePiece(Point src, Point dst)
