@@ -123,6 +123,8 @@ std::string Board::movePiece(Point src, Point dst)
 				catch (exception& e)
 				{
 					retVal = e.what()[0];//first char is the err number
+					this->_board[src.getY() - '1'][src.getX() - 'a'] = srcPiece;
+					this->_board[dst.getY() - '1'][dst.getX() - 'a'] = dstPiece;
 				}
 			}
 			else
@@ -205,57 +207,163 @@ bool Board::isCheck()
 	if (!check)
 	{
 		//check for rooks:
+		
 		Point coordinates = temp->getCoordinates();
-		for (int i = 0; i < BOARD_LENGTH && !check; i++)
+		char x = coordinates.getX(), y = coordinates.getY();
+		//check for enemys right of the king:
+		for (int i = coordinates.getX() - 'a' + 1; i < BOARD_LENGTH && !check; i++)
 		{
-			//check for enemy rook on the same row
-			temp = this->_board[i][coordinates.getX() - 'a'];
-			if (temp != nullptr)
+			Piece* tempPiece = this->_board[coordinates.getY() - '1'][i];
+			if (tempPiece != nullptr)
 			{
-				check = temp->getType() == "Rook" && temp->isWhite() == this->_currentPlayer;
-			}
-			//check for enemy rook of the same columb
-			temp = this->_board[coordinates.getY() - '1'][i];
-			if (!check && temp != nullptr)
-			{
-				check = temp->getType() == "Rook" && temp->isWhite() == this->_currentPlayer;
+				if (tempPiece->isWhite() == this->_currentPlayer)
+				{
+					//friend on the right, blocks the way
+					break;
+				}
+				else
+				{
+					check = tempPiece->getType() == "Rook";
+				}
 			}
 		}
-		//check for Pawns:
-		if (!check)
+		//on the left
+		for (int i = coordinates.getX() - 'a' - 1; i >= 0 && !check; i--)
 		{
-			char safeRow = 0, yOffset = 0;
-			//checking for possiability on other player king
-			if (this->_currentPlayer)
+			Piece* tempPiece = this->_board[coordinates.getY() - '1'][i];
+			if (tempPiece != nullptr)
 			{
-				//black player, check for pawns from below
-				safeRow = '1';
-				yOffset = -1;
-			}
-			else
-			{
-				//white player, check for pawn from top left or right
-				safeRow = '8';
-				yOffset = 1;
-			}
-			if (coordinates.getY() != safeRow)//top row, no pawn can eat the king
-			{
-				//king not at right most position
-				Piece* lPawn = nullptr;
-				Piece* rPawn = nullptr;
-				if (coordinates.getX() > 'a')
+				if (tempPiece->isWhite() == this->_currentPlayer)
 				{
-					lPawn = this->_board[coordinates.getY() + yOffset - '1'][coordinates.getX() - 1 - 'a'];
+					//friend on the left, blocks the way
+					break;
 				}
+				else
+				{
+					check = tempPiece->getType() == "Rook" || tempPiece->getType() == "Queen";
+				}
+			}
+		}
+		//above:
+		for (int i = coordinates.getY() - '1' + 1; i < BOARD_LENGTH 0 && !check; i++)
+		{
+			Piece* tempPiece = this->_board[i][coordinates.getX() - 'a'];
+			if (tempPiece != nullptr)
+			{
+				if (tempPiece->isWhite() == this->_currentPlayer)
+				{
+					//friend is above, blocks the way
+					break;
+				}
+				else
+				{
+					check = tempPiece->getType() == "Rook" || tempPiece->getType() == "Queen";
+				}
+			}
+		}
+		//below
+		for (int i = coordinates.getY() - '1' - 1; i >= 0 && !check; i--)
+		{
+			Piece* tempPiece = this->_board[i][coordinates.getX() - 'a'];
+			if (tempPiece != nullptr)
+			{
+				if (tempPiece->isWhite() == this->_currentPlayer)
+				{
+					//friend is below, blocks the way
+					break;
+				}
+				else
+				{
+					check = tempPiece->getType() == "Rook" || tempPiece->getType() == "Queen";
+				}
+			}
+		}
+		//diagonal right and up
+		Point tempPoint(coordinates.getX() + 1, coordinates.getY() + 1);
+		char tempX = tempPoint.getX(), tempY = tempPoint.getY();
+		while (!check && tempX - 'a' < BOARD_LENGTH && tempY - '1' < BOARD_LENGTH)
+		{
+			Piece* tempPiece = this->_board[tempX - '1'][tempY - 'a'];
+			
+			if (tempPiece != nullptr)
+			{
+				if (tempPiece->isWhite() == this->_currentPlayer)
+				{
+					//friend  blocks the way
+					break;
+				}
+				else
+				{
+					check = tempPiece->getType() == "Bishop" || tempPiece->getType() == "Queen" || (abs(tempX - x) == 1 && abs(tempY - y) == 1 && tempPiece->getType() == "Pawn";
+				}
+			}
+			tempX++;
+			tempY++;
+		}
+		tempPoint.setXY(coordinates.getX() - 1, coordinates.getY() - 1);
+		tempX = tempPoint.getX(), tempY = tempPoint.getY();
+		while (!check && tempX - 'a' >= 0 && tempY - '1' >= 0)
+		{
+			Piece* tempPiece = this->_board[tempX - '1'][tempY - 'a'];
 
-				if (coordinates.getX() < 'h')
+			if (tempPiece != nullptr)
+			{
+				if (tempPiece->isWhite() == this->_currentPlayer)
 				{
-					rPawn = this->_board[coordinates.getY() + yOffset - '1'][coordinates.getX() + 1 - 'a'];
+					//friend  blocks the way
+					break;
 				}
-				//check for enemy pawn on either side
-				check = (lPawn != nullptr && lPawn->isWhite() == this->_currentPlayer) || (rPawn != nullptr && rPawn->isWhite() == this->_currentPlayer);
+				else
+				{
+					check = tempPiece->getType() == "Bishop" || tempPiece->getType() == "Queen" || (abs(tempX - x) == 1 && abs(tempY - y) == 1 && tempPiece->getType() == "Pawn";
+				}
 			}
+			tempX--;
+			tempY--;
 		}
+		tempPoint.setXY(coordinates.getX() + 1, coordinates.getY() - 1);
+		tempX = tempPoint.getX(), tempY = tempPoint.getY();
+		while (!check && tempX - 'a' >= 0 && tempY - '1' >= 0)
+		{
+			Piece* tempPiece = this->_board[tempX - '1'][tempY - 'a'];
+
+			if (tempPiece != nullptr)
+			{
+				if (tempPiece->isWhite() == this->_currentPlayer)
+				{
+					//friend  blocks the way
+					break;
+				}
+				else
+				{
+					check = tempPiece->getType() == "Bishop" || tempPiece->getType() == "Queen" || (abs(tempX - x) == 1 && abs(tempY - y) == 1 && tempPiece->getType() == "Pawn";
+				}
+			}
+			tempX++;
+			tempY--;
+		}
+		tempPoint.setXY(coordinates.getX() - 1, coordinates.getY() + 1);
+		tempX = tempPoint.getX(), tempY = tempPoint.getY();
+		while (!check && tempX - 'a' >= 0 && tempY - '1' >= 0)
+		{
+			Piece* tempPiece = this->_board[tempX - '1'][tempY - 'a'];
+
+			if (tempPiece != nullptr)
+			{
+				if (tempPiece->isWhite() == this->_currentPlayer)
+				{
+					//friend  blocks the way
+					break;
+				}
+				else
+				{
+					check = tempPiece->getType() == "Bishop" || tempPiece->getType() == "Queen" || (abs(tempX - x) == 1 && abs(tempY - y) == 1 && tempPiece->getType() == "Pawn";
+				}
+			}
+			tempX--;
+			tempY++;
+		}
+	
 	}
 	
 	return check;

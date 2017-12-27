@@ -13,8 +13,8 @@ void Rook::move(Point coordinates, const vector<vector<Piece*>>& board)
 {
 	int i = 0;
 	int j = 0;
-	char x = this->_coordinates.getX();
-	char y = this->_coordinates.getY();
+	char x = this->_coordinates.getX() - 'a';
+	char y = this->_coordinates.getY() - '1';
 
 	char newX = coordinates.getX() - 'a';
 	char newY = coordinates.getY() - '1';
