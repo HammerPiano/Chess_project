@@ -7,6 +7,7 @@
 #include "King.h"
 #include "Pawn.h"
 #include "Knight.h"
+#include "Bishop.h"
 #include <exception>
 
 //according to the presentation, gets a 66 long string

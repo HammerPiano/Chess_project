@@ -55,6 +55,9 @@ Board::Board(std::string initialState) : _board(BOARD_LENGTH,vector<Piece*>(BOAR
 			case 'n':
 				temp = new Knight(Point(x + 'a', actualY + '1'), piece == 'N');
 				break;
+			case 'B':
+			case 'b':
+				temp = new Bishop(Point(x + 'a', actualY + '1'), piece == 'B');
 			default:
 				break;
 			}
